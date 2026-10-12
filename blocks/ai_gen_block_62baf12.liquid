@@ -1,0 +1,340 @@
+{% doc %}
+  @prompt
+    Create a full-width CTA banner section with a dark navy background (#1a1f2e), a large bold white headline "Ready to automate your business?", a light gray subtext below it saying "Join 787+ businesses that have transformed their operations with YoloNerd. Schedule your free consultation today.", and two pill-shaped buttons side by side: the first is orange with white uppercase text "GET STARTED FREE →", and the second has a dark background with a white border and white uppercase text "📞 CALL US". Center all content vertically and horizontally. The section should be responsive and have generous padding.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-cta-banner-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    background-color: {{ block.settings.background_color }};
+    padding: {{ block.settings.padding_desktop }}px 40px;
+  }
+
+  .ai-cta-banner-container-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .ai-cta-banner-headline-{{ ai_gen_id }} {
+    color: {{ block.settings.headline_color }};
+    font-size: {{ block.settings.headline_size }}px;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .ai-cta-banner-subtext-{{ ai_gen_id }} {
+    color: {{ block.settings.subtext_color }};
+    font-size: {{ block.settings.subtext_size }}px;
+    margin: 0;
+    line-height: 1.5;
+    max-width: 800px;
+  }
+
+  .ai-cta-banner-buttons-{{ ai_gen_id }} {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .ai-cta-banner-button-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 32px;
+    border-radius: 50px;
+    font-size: {{ block.settings.button_text_size }}px;
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .ai-cta-banner-button-primary-{{ ai_gen_id }} {
+    background-color: {{ block.settings.primary_button_bg }};
+    color: {{ block.settings.primary_button_text_color }};
+  }
+
+  .ai-cta-banner-button-primary-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.primary_button_hover_bg }};
+    transform: translateY(-2px);
+  }
+
+  .ai-cta-banner-button-secondary-{{ ai_gen_id }} {
+    background-color: {{ block.settings.secondary_button_bg }};
+    color: {{ block.settings.secondary_button_text_color }};
+    border: 2px solid {{ block.settings.secondary_button_border }};
+  }
+
+  .ai-cta-banner-button-secondary-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.secondary_button_hover_bg }};
+    border-color: {{ block.settings.secondary_button_hover_border }};
+    transform: translateY(-2px);
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-cta-banner-{{ ai_gen_id }} {
+      padding: {{ block.settings.padding_mobile }}px 20px;
+    }
+
+    .ai-cta-banner-headline-{{ ai_gen_id }} {
+      font-size: {{ block.settings.headline_size | times: 0.6 }}px;
+    }
+
+    .ai-cta-banner-subtext-{{ ai_gen_id }} {
+      font-size: {{ block.settings.subtext_size | times: 0.9 }}px;
+    }
+
+    .ai-cta-banner-buttons-{{ ai_gen_id }} {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .ai-cta-banner-button-{{ ai_gen_id }} {
+      width: 100%;
+      padding: 14px 24px;
+    }
+  }
+{% endstyle %}
+
+<cta-banner-{{ ai_gen_id }} class="ai-cta-banner-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-cta-banner-container-{{ ai_gen_id }}">
+    {% if block.settings.headline != blank %}
+      <h2 class="ai-cta-banner-headline-{{ ai_gen_id }}">{{ block.settings.headline }}</h2>
+    {% endif %}
+
+    {% if block.settings.subtext != blank %}
+      <p class="ai-cta-banner-subtext-{{ ai_gen_id }}">{{ block.settings.subtext }}</p>
+    {% endif %}
+
+    <div class="ai-cta-banner-buttons-{{ ai_gen_id }}">
+      {% if block.settings.primary_btn_text != blank %}
+        <a
+          href="{{ block.settings.primary_btn_link }}"
+          class="ai-cta-banner-button-{{ ai_gen_id }} ai-cta-banner-button-primary-{{ ai_gen_id }}"
+        >
+          {{ block.settings.primary_btn_text }}
+        </a>
+      {% endif %}
+
+      {% if block.settings.secondary_btn_text != blank %}
+        <a
+          href="{{ block.settings.secondary_btn_link }}"
+          class="ai-cta-banner-button-{{ ai_gen_id }} ai-cta-banner-button-secondary-{{ ai_gen_id }}"
+        >
+          {{ block.settings.secondary_btn_text }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</cta-banner-{{ ai_gen_id }}>
+
+{% schema %}
+{
+  "name": "CTA banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Ready to automate your business?"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Join 787+ businesses that have transformed their operations with YoloNerd. Schedule your free consultation today."
+    },
+    {
+      "type": "header",
+      "content": "Primary button"
+    },
+    {
+      "type": "text",
+      "id": "primary_btn_text",
+      "label": "Text",
+      "default": "GET STARTED FREE →"
+    },
+    {
+      "type": "url",
+      "id": "primary_btn_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Secondary button"
+    },
+    {
+      "type": "text",
+      "id": "secondary_btn_text",
+      "label": "Text",
+      "default": "📞 CALL US"
+    },
+    {
+      "type": "url",
+      "id": "secondary_btn_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#1a1f2e"
+    },
+    {
+      "type": "color",
+      "id": "headline_color",
+      "label": "Headline",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "subtext_color",
+      "label": "Subtext",
+      "default": "#d1d5db"
+    },
+    {
+      "type": "color",
+      "id": "primary_button_bg",
+      "label": "Primary button background",
+      "default": "#ff6b35"
+    },
+    {
+      "type": "color",
+      "id": "primary_button_text_color",
+      "label": "Primary button text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "primary_button_hover_bg",
+      "label": "Primary button hover",
+      "default": "#e55a2b"
+    },
+    {
+      "type": "color",
+      "id": "secondary_button_bg",
+      "label": "Secondary button background",
+      "default": "#1a1f2e"
+    },
+    {
+      "type": "color",
+      "id": "secondary_button_text_color",
+      "label": "Secondary button text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "secondary_button_border",
+      "label": "Secondary button border",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "secondary_button_hover_bg",
+      "label": "Secondary button hover background",
+      "default": "#2a2f3e"
+    },
+    {
+      "type": "color",
+      "id": "secondary_button_hover_border",
+      "label": "Secondary button hover border",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "headline_size",
+      "label": "Headline size",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "subtext_size",
+      "label": "Subtext size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "button_text_size",
+      "label": "Button text size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_desktop",
+      "label": "Desktop padding",
+      "min": 40,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_mobile",
+      "label": "Mobile padding",
+      "min": 30,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    }
+  ],
+  "presets": [
+    {
+      "name": "CTA banner"
+    }
+  ]
+}
+{% endschema %}

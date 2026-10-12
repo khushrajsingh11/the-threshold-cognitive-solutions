@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="google-site-verification" content="v9Gs_8pvzr-zUYgGWgmGhL4uz84eEpY4sykwSHRrTIo" />
+    {%- if settings.favicon != blank -%}
+      <link
+        rel="icon"
+        type="image/png"
+        href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
+      >
+    {%- endif -%}
+    <title>{{ shop.name }}</title>
+
+    {{ content_for_header }}
+
+    <link rel="stylesheet" href="{{ 'index.css' | asset_url }}">
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <div style="display:none">{{ content_for_layout }}</div>
+    <script>
+      window.__ASSET_BASE__ = "{{ 'logo.webp' | asset_url | split: 'logo.webp' | first }}";
+    </script>
+    <script type="module" src="{{ 'index.js' | asset_url }}"></script>
+  </body>
+</html>
